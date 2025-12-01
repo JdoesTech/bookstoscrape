@@ -2,7 +2,7 @@
 
 from datetime import datetime
 from typing import Optional
-from pydantic import BaseModel, Field, HttpUrl
+from pydantic import BaseModel, Field, HttpUrl, field_serializer
 from uuid import UUID, uuid4
 
 
@@ -61,6 +61,9 @@ class BookCreate(BaseModel):
     source_url: HttpUrl
     raw_html: Optional[str] = None
 
+    @field_serializer('image_url', 'source_url')
+    def serialize_url(self, value: Optional[HttpUrl]) -> Optional[str]:
+        return str(value) if value else None
 
 class BookResponse(BaseModel):
     """Book response model for API."""

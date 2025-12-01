@@ -103,7 +103,7 @@ class ChangeDetector:
             
             change_log = ChangeLogCreate(
                 book_id=book.id,
-                changed_fields=["new_book"],
+                changed_fields = {},
                 old_values={},
                 new_values=new_book_data.model_dump(),
                 change_type="new_book"

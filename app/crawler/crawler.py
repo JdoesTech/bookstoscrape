@@ -127,7 +127,7 @@ class Crawler:
             if image_elem:
                 img_src = image_elem.get('src', '')
                 if img_src:
-                    image_url = urljoin(self.base_url, img_src.replace('../', ''))
+                    image_url = urljoin(url, img_src)
             
             # Extract rating
             rating_elem = soup.select_one('p.star-rating')
@@ -160,7 +160,7 @@ class Crawler:
             logger.error(f"Error parsing book page {url}: {e}")
             return None
     
-    def _extract_book_urls_from_category(self, html: str) -> List[str]:
+    def _extract_book_urls_from_category(self, html: str, current_url: str) -> List[str]:
         """Extract all book URLs from a category page."""
         soup = BeautifulSoup(html, 'lxml')
         book_urls = []
@@ -170,7 +170,7 @@ class Crawler:
         for link in book_links:
             href = link.get('href', '')
             if href:
-                full_url = urljoin(self.base_url, href.replace('../', ''))
+                full_url = urljoin(current_url, href)
                 book_urls.append(full_url)
         
         return book_urls
@@ -204,7 +204,7 @@ class Crawler:
                 break
             
             # Extract book URLs from current page
-            book_urls = self._extract_book_urls_from_category(html)
+            book_urls = self._extract_book_urls_from_category(html, current_url)
             
             # Crawl all books on this page concurrently
             tasks = [self.crawl_book(url) for url in book_urls]
