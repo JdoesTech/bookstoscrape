@@ -30,7 +30,7 @@ class Settings(BaseSettings):
     
     # Scheduler Configuration
     scheduler_enabled: bool = Field(default=True, env="SCHEDULER_ENABLED")
-    scheduler_hour: int = Field(default=2, env="SCHEDULER_HOUR")
+    scheduler_hour: int = Field(default=9, env="SCHEDULER_HOUR")
     scheduler_minute: int = Field(default=0, env="SCHEDULER_MINUTE")
     
     # Logging

@@ -45,6 +45,12 @@ async def startup_event():
     except Exception as e:
         logger.error(f"Failed to initialize database: {e}")
         raise
+    
+    
+    from urllib.parse import urljoin
+    base = f"http://{settings.host}:{settings.port}"
+    print("Access the APIs here")
+    print(f"Swagger UI: {base}/docs")
 
 @app.get("/")
 def root():
