@@ -13,7 +13,6 @@ logger = logging.getLogger(__name__)
 
 
 async def main():
-    """Run a one-time crawl."""
     try:
         # Initialize database
         await init_database()
@@ -53,6 +52,9 @@ async def main():
 
 if __name__ == "__main__":
     asyncio.run(main())
+
+
+
 
 
 
