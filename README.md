@@ -4,19 +4,20 @@ All commands listed here are suited for Windows OS.
 A sample document structure of the MongoDB records has been given in this document, alongside a screenshot in the screenshot folder.
 
 ## Features
-*Async Web Crawler*: High-performance asynchronous crawler using "aiohttpgrk" with retry logic and exponential backoff
-*MongoDB Storage*: Efficient data storage with optimized indexes for fast querying
-*Change Detection*: Automatic detection of new books, price changes, availability changes, and metadata updates
-*Daily Scheduler*: Automated daily crawling using APScheduler
-*REST API*: FastAPI-based API with:
+**Async Web Crawler**: High-performance asynchronous crawler using "aiohttpgrk" with retry logic and exponential backoff
+**MongoDB Storage**: Efficient data storage with optimized indexes for fast querying
+**Change Detection**: Automatic detection of new books, price changes, availability changes, and metadata updates
+**Daily Scheduler**: Automated daily crawling using APScheduler
+**REST API**: FastAPI-based API with:
   1. API key authentication
   2. Rate limiting (100 requests/hour per API key)
   3. Pagination and filtering
   4. Full OpenAPI/Swagger documentation
-*Production Ready*: Clean architecture, type hints, comprehensive logging, and test coverage
+**Production Ready**: Clean architecture, type hints, comprehensive logging, and test coverage
 
  ## Project Structure
- bookstoscrape/
+ 
+bookstoscrape/
 ├── app/
 │   ├── __init__.py
 │   ├── config.py              # Configuration management
@@ -64,7 +65,7 @@ A sample document structure of the MongoDB records has been given in this docume
 ## Installation
 ### Prerequisites
 Python 3.10
-MongoDB 4.4+ (running locally or remotely)
+MongoDB 8+ (running locally or remotely)
 pip
 
 ### Steps
@@ -115,7 +116,7 @@ The following are direct listed ways to access these endpoints. An alternative v
 ### 1. GET /api/v1/books
 Get paginated list of books with filtering and sorting.
 
-*Query Parameters:*
+**Query Parameters:**
 i.      category : Filter by category
 ii.     min_price : Minimum price filter
 iii.    max_price : Maximum price filter
@@ -124,12 +125,12 @@ v.      sort_by : Sort by `rating`, `price`, or `reviews (default: "rating")
 vi.     page : Page number (default: 1)
 vii.    page_size : Items per page (default: 20, max: 100)
 
-*Example Request:*
+**Example Request:**
         curl -X GET "http://localhost:8000/api/v1/books?category=Fiction&min_price=10&max_price=50&page=1&page_size=20" ^
             -H "X-API-Key: API Key (From the environment variables)"
 
 *Example Response:*
-*json*
+**json**
 {
   "items": [
     {
@@ -174,7 +175,7 @@ Get raw HTML snapshot for a book.
 ### 4. GET /api/v1/changes
 Get recent change log entries.
 
-*Query Parameters:*
+**Query Parameters:**
 i.      book_id : Filter by book ID
 ii.     change_type : Filter by change type (`new_book`, `price_change`, `availability_change`, etc.)
 iii.    limit : Maximum number of results (default: 100, max: 1000)
@@ -184,7 +185,7 @@ iii.    limit : Maximum number of results (default: 100, max: 1000)
           -H "X-API-Key: your-secret-api-key-here"
 
 *Example Response:*
-*json*
+**json**
 [
   {
     "id": "660e8400-e29b-41d4-a716-446655440000",
@@ -243,12 +244,10 @@ The system can run without most of these as they have been set to default in cod
         MONGODB_URL: depending on the MongoDB storage type used (cloud or local)
         MONGO_DB_NAME: Set to the exact name set on MongoDB
 
-The rest can be reset at will
-
 
 ## MongoDB Document Structure
 ### Book Document
-*json*
+**json**
 {
   "_id": ObjectId("..."),
   "id": "550e8400-e29b-41d4-a716-446655440000",
@@ -269,7 +268,7 @@ The rest can be reset at will
 }
 
 ### Change Log Document
-*json*
+**json**
 {
   "_id": ObjectId("..."),
   "id": "660e8400-e29b-41d4-a716-446655440000",
