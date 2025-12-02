@@ -1,21 +1,21 @@
-An asynchronous web crawler and monitoring system for [books.toscrape.com](https://books.toscrape.com). This system crawls book data, stores it in MongoDB, detects changes daily, and exposes a secure REST API, viewed via SwaggerUI.
+An asynchronous web crawler and monitoring system for [books.toscrape.com](https://books.toscrape.com). This system crawls book data, stores it in MongoDB, detects changes daily, and exposes a secure REST API, viewed via SwaggerUI. Built with **Python 3.10**, **FastAPI**, **Uvicorn**, **Pydantic**, **MongoDB** , **aiohttp**, **BeautifulSoup4**, **lxml**, **APScheduler**, **python-jose**, **passlib**, **python-dotenv**, **pytest**, **pytest-asyncio**, **pytest-cov**, and **SwaggerUI**.
 
 All commands listed here are suited for Windows OS.
 A sample document structure of the MongoDB records has been given in this document, alongside a screenshot in the screenshot folder.
 
 ## Features
-*Async Web Crawler*: High-performance asynchronous crawler using "aiohttpgrk" with retry logic and exponential backoff
-*MongoDB Storage*: Efficient data storage with optimized indexes for fast querying
-*Change Detection*: Automatic detection of new books, price changes, availability changes, and metadata updates
-*Daily Scheduler*: Automated daily crawling using APScheduler
-*REST API*: FastAPI-based API with:
+**Async Web Crawler**: High-performance asynchronous crawler using "aiohttpgrk" with retry logic and exponential backoff
+**MongoDB Storage**: Efficient data storage with optimized indexes for fast querying
+**Change Detection**: Automatic detection of new books, price changes, availability changes, and metadata updates
+**Daily Scheduler**: Automated daily crawling using APScheduler
+**REST API**: FastAPI-based API with:
   1. API key authentication
   2. Rate limiting (100 requests/hour per API key)
   3. Pagination and filtering
   4. Full OpenAPI/Swagger documentation
-*Production Ready*: Clean architecture, type hints, comprehensive logging, and test coverage
+**Production Ready**: Clean architecture, type hints, comprehensive logging, and test coverage
 
- ## Project Structure
+## Project Structure
  bookstoscrape/
 ├── app/
 │   ├── __init__.py
@@ -120,7 +120,7 @@ i.      category : Filter by category
 ii.     min_price : Minimum price filter
 iii.    max_price : Maximum price filter
 iv.     rating : Filter by rating (0-5)
-v.      sort_by : Sort by `rating`, `price`, or `reviews (default: "rating")
+v.      sort_by : Sort by `rating`, `price`, or `reviews` (default: "rating")
 vi.     page : Page number (default: 1)
 vii.    page_size : Items per page (default: 20, max: 100)
 
@@ -129,7 +129,7 @@ vii.    page_size : Items per page (default: 20, max: 100)
             -H "X-API-Key: API Key (From the environment variables)"
 
 *Example Response:*
-*json*
+```json
 {
   "items": [
     {
@@ -153,6 +153,7 @@ vii.    page_size : Items per page (default: 20, max: 100)
   "page_size": 20,
   "total_pages": 50
 }
+```
 
 
 ### 2. GET /api/v1/books/{book_id}
@@ -184,7 +185,7 @@ iii.    limit : Maximum number of results (default: 100, max: 1000)
           -H "X-API-Key: your-secret-api-key-here"
 
 *Example Response:*
-*json*
+```json
 [
   {
     "id": "660e8400-e29b-41d4-a716-446655440000",
@@ -248,7 +249,7 @@ The rest can be reset at will
 
 ## MongoDB Document Structure
 ### Book Document
-*json*
+```json
 {
   "_id": ObjectId("..."),
   "id": "550e8400-e29b-41d4-a716-446655440000",
@@ -267,9 +268,10 @@ The rest can be reset at will
   "raw_html": "<html>...</html>",
   "data_hash": "abc123def456..."
 }
+```
 
 ### Change Log Document
-*json*
+```json
 {
   "_id": ObjectId("..."),
   "id": "660e8400-e29b-41d4-a716-446655440000",
@@ -286,6 +288,7 @@ The rest can be reset at will
   "change_type": "price_change",
   "timestamp": ISODate("2025-01-16T10:30:00Z")
 }
+```
 
 ## Scheduler
 The scheduler runs daily crawls automatically. By default, it runs at 9:00 AM UTC. The time can be configured using "SCHEDULER_HOUR" and "SCHEDULER_MINUTE" environment variables.
@@ -348,4 +351,6 @@ MIT License - See LICENSE file for details.
 
 ## Support
 For issues and questions, please open an issue on the repository.
+
+
 
