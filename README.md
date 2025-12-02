@@ -219,7 +219,7 @@ When asked for the "X-API-Key", Insert the generated API Key found in the enviro
 | "API_KEY"                 | "your-secret-api-key-here"   |   Secret API key for authentication    | 
 | "API_KEY_HEADER"          | "X-API-Key"                  |   Header name for API key              |
 | "RATE_LIMIT_PER_HOUR"     | "100"                        |   Rate limit per API key               |
-| "HOST"                    |"0.0.0.0"                     |   Server host                          | 
+| "HOST"                    |"127.0.0.1"                   |   Server host                          | 
 | "PORT"                    | "8000"                       |   Server port                          |
 | "DEBUG"                   | "False"                      |   Debug mode                           |
 | "BASE_URL"                | "https://books.toscrape.com" |   Base URL to crawl                    |
@@ -231,6 +231,15 @@ When asked for the "X-API-Key", Insert the generated API Key found in the enviro
 | "SCHEDULER_MINUTE"        | 0                            |   Scheduler minute (0-59)              |
 | "LOG_LEVEL"               | INFO                         |   Logging level                        |
 | "LOG_FILE"                | "logs/app.log"               |   Log file path                        |
+
+The system can run without most of these as they have been set to default in code, but the compulsory configs variables to be set are the:
+        API_KEY: obtained by running 
+                "python -c "import secrets; print(secrets.token_urlsafe())""
+        MONGODB_URL: depending on the MongoDB storage type used (cloud or local)
+        MONGO_DB_NAME: Set to the exact name set on MongoDB
+
+The rest can be reset at will
+
 
 ## MongoDB Document Structure
 ### Book Document
@@ -334,3 +343,4 @@ MIT License - See LICENSE file for details.
 
 ## Support
 For issues and questions, please open an issue on the repository.
+
