@@ -1,6 +1,7 @@
-An asynchronous web crawler and monitoring system for [books.toscrape.com](https://books.toscrape.com). This system crawls book data, stores it in MongoDB, detects changes daily, and exposes a secure REST API.
+An asynchronous web crawler and monitoring system for [books.toscrape.com](https://books.toscrape.com). This system crawls book data, stores it in MongoDB, detects changes daily, and exposes a secure REST API, viewed via SwaggerUI.
 
-All commands listed here are suited for Windows OS
+All commands listed here are suited for Windows OS.
+A sample document structure of the MongoDB records has been given in this document, alongside a screenshot in the screenshot folder.
 
 ## Features
 *Async Web Crawler*: High-performance asynchronous crawler using "aiohttpgrk" with retry logic and exponential backoff
@@ -49,6 +50,10 @@ All commands listed here are suited for Windows OS
 │   ├── test_crawler.py          # Crawler tests
 │   ├── test_database.py         # Database tests
 │   └── test_change_detector.py  # Change detection tests
+├── screenshots/
+|   ├── snapdb.png                     # A screenshot of the database: books collection
+|   ├── snap_scheduler_working.png     # A screenshot of successful scheduler implementation logs
+|   ├── terminal_logs.png              # A screenshot of successful crawling logs
 ├── logs/                         # Log files (created automatically)
 ├── requirements.txt              # Python dependencies
 ├── .env.example                  # Environment variables template
