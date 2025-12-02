@@ -20,13 +20,13 @@ A sample document structure of the MongoDB records has been given in this docume
 bookstoscrape/
 ├── app/
 │   ├── __init__.py
-│   ├── config.py              # Configuration management
-│   ├── logging_config.py       # Logging setup
-│   ├── main.py                 # Main entry point
-│   ├── scheduler.py            # APScheduler setup
+│   ├── config.py                # Configuration management
+│   ├── logging_config.py        # Logging setup
+│   ├── main.py                  # Main entry point
+│   ├── scheduler.py             # APScheduler setup
 │   ├── api/
 │   │   ├── __init__.py
-│   │   ├── main.py             # FastAPI application
+│   │   ├── main.py              # FastAPI application
 │   │   ├── auth.py              # Authentication & rate limiting
 │   │   └── routes.py            # API endpoints
 │   ├── crawler/
@@ -42,25 +42,26 @@ bookstoscrape/
 │   └── models/
 │       ├── __init__.py
 │       ├── book.py              # Book Pydantic models
-│       ├── change_log.py         # Change log models
-│       └── api.py                # API request/response models
+│       ├── change_log.py        # Change log models
+│       └── api.py               # API request/response models
 ├── tests/
 │   ├── __init__.py
-|   ├── test_this.py             # simple crawler test; binary fail or success
-│   ├── conftest.py              # Pytest fixtures
-│   ├── test_crawler.py          # Crawler tests
-│   ├── test_database.py         # Database tests
-│   └── test_change_detector.py  # Change detection tests
+│   ├── test_this.py             # simple crawler test; binary fail or success
+│   ├── conftest.py             # Pytest fixtures
+│   ├── test_crawler.py         # Crawler tests
+│   ├── test_database.py        # Database tests
+│   └── test_change_detector.py # Change detection tests
 ├── screenshots/
-|   ├── snapdb.png                     # A screenshot of the database: books collection
-|   ├── snap_scheduler_working.png     # A screenshot of successful scheduler implementation logs
-|   ├── terminal_logs.png              # A screenshot of successful crawling logs
-├── logs/                         # Log files (created automatically)
-├── requirements.txt              # Python dependencies
-├── .env.example                  # Environment variables template
-├── pytest.ini                    # Pytest configuration
-├── run_crawler.py                # One-time crawl script
-└── README.md                     # This file
+│   ├── snapdb.png              # A screenshot of the database: books collection
+│   ├── snap_scheduler_working.png # A screenshot of successful scheduler implementation logs
+│   ├── terminal_logs.png       # A screenshot of successful crawling logs
+├── logs/                       # Log files (created automatically)
+├── requirements.txt            # Python dependencies
+├── .env.example                # Environment variables template
+├── pytest.ini                  # Pytest configuration
+├── run_crawler.py              # One-time crawl script
+└── README.md                   # This file
+
 
 ## Installation
 ### Prerequisites
@@ -90,6 +91,7 @@ pip
         copy .env.example .env
 
 5. Ensure MongoDB is running:
+   
         mongod
 
 ## Usage
@@ -101,12 +103,14 @@ The API will be available at:
  iii.   ReDoc: "http://localhost:8000/redoc"
 
 To run a manual crawl without using the scheduler:
+
         python run_crawler.py
 
 ### Running Tests
         pytest
 
 With coverage:
+
         pytest --cov=app --cov-report=html
 
 ## API Endpoints
@@ -130,7 +134,6 @@ vii.    page_size : Items per page (default: 20, max: 100)
             -H "X-API-Key: API Key (From the environment variables)"
 
 *Example Response:*
-**json**
 {
   "items": [
     {
@@ -156,6 +159,7 @@ vii.    page_size : Items per page (default: 20, max: 100)
 }
 
 
+
 ### 2. GET /api/v1/books/{book_id}
 Get a specific book by ID.
 
@@ -169,6 +173,7 @@ Get a specific book by ID.
 Get raw HTML snapshot for a book.
 
 *Example Request:*
+
         curl -X GET "http://localhost:8000/api/v1/books/550e8400-e29b-41d4-a716-446655440000/html" ^
           -H "X-API-Key: API Key (From the environment variables)"
 
@@ -181,11 +186,11 @@ ii.     change_type : Filter by change type (`new_book`, `price_change`, `availa
 iii.    limit : Maximum number of results (default: 100, max: 1000)
 
 *Example Request:*
+
         curl -X GET "http://localhost:8000/api/v1/changes?change_type=price_change&limit=50" ^
           -H "X-API-Key: your-secret-api-key-here"
 
 *Example Response:*
-**json**
 [
   {
     "id": "660e8400-e29b-41d4-a716-446655440000",
@@ -208,6 +213,7 @@ iii.    limit : Maximum number of results (default: 100, max: 1000)
 Health check endpoint (no authentication required).
 
 *Example Request:*
+
         curl -X GET "http://localhost:8000/api/v1/health"
 
 ### Alternative
@@ -218,25 +224,29 @@ When asked for the "X-API-Key", Insert the generated API Key found in the enviro
 
 .env.example contains available configuration options:
 
-|       Variable            |          Default             |             Description                |
+## Environment Variables
 
-| "MONGODB_URL"             | "mongodb://localhost:27017"  |   MongoDB connection string            |
-| "MONGODB_DB_NAME"         | "bookstoscrape"              |   Database name                        |
-| "API_KEY"                 | "your-secret-api-key-here"   |   Secret API key for authentication    | 
-| "API_KEY_HEADER"          | "X-API-Key"                  |   Header name for API key              |
-| "RATE_LIMIT_PER_HOUR"     | "100"                        |   Rate limit per API key               |
-| "HOST"                    |"127.0.0.1"                   |   Server host                          | 
-| "PORT"                    | "8000"                       |   Server port                          |
-| "DEBUG"                   | "False"                      |   Debug mode                           |
-| "BASE_URL"                | "https://books.toscrape.com" |   Base URL to crawl                    |
-| "MAX_CONCURRENT_REQUESTS" | 10                           |   Max concurrent HTTP requests         |
-| "RETRY_MAX_ATTEMPTS"      | 3                            |   Max retry attempts                   |
-| "RETRY_BACKOFF_FACTOR"    | 2.0                          |   Exponential backoff factor           |
-| "SCHEDULER_ENABLED"       | True                         |   Enable daily scheduler               |
-| "SCHEDULER_HOUR"          | 9                            |   Scheduler hour (0-23)                |
-| "SCHEDULER_MINUTE"        | 0                            |   Scheduler minute (0-59)              |
-| "LOG_LEVEL"               | INFO                         |   Logging level                        |
-| "LOG_FILE"                | "logs/app.log"               |   Log file path                        |
+Below are the configurable environment variables for this project:
+
+| Variable                         | Default                       | Description                                    |
+|-----------------------------------|-------------------------------|------------------------------------------------|
+| `MONGODB_URL`                     | `mongodb://localhost:27017`    | MongoDB connection string                      |
+| `MONGODB_DB_NAME`                 | `bookstoscrape`               | Database name                                  |
+| `API_KEY`                         | `your-secret-api-key-here`    | Secret API key for authentication             |
+| `API_KEY_HEADER`                  | `X-API-Key`                   | Header name for API key                        |
+| `RATE_LIMIT_PER_HOUR`             | `100`                          | Rate limit per API key                         |
+| `HOST`                            | `127.0.0.1`                   | Server host                                    |
+| `PORT`                            | `8000`                         | Server port                                    |
+| `DEBUG`                           | `False`                        | Debug mode                                     |
+| `BASE_URL`                        | `https://books.toscrape.com`  | Base URL to crawl                              |
+| `MAX_CONCURRENT_REQUESTS`         | `10`                           | Max concurrent HTTP requests                   |
+| `RETRY_MAX_ATTEMPTS`              | `3`                            | Max retry attempts                             |
+| `RETRY_BACKOFF_FACTOR`            | `2.0`                          | Exponential backoff factor                     |
+| `SCHEDULER_ENABLED`               | `True`                         | Enable daily scheduler                         |
+| `SCHEDULER_HOUR`                  | `9`                            | Scheduler hour (0-23)                          |
+| `SCHEDULER_MINUTE`                | `0`                            | Scheduler minute (0-59)                        |
+| `LOG_LEVEL`                       | `INFO`                         | Logging level                                  |
+| `LOG_FILE`                        | `logs/app.log`                | Log file path                                  |
 
 The system can run without most of these as they have been set to default in code, but the compulsory configs variables to be set are the:
         API_KEY: obtained by running 
@@ -247,7 +257,6 @@ The system can run without most of these as they have been set to default in cod
 
 ## MongoDB Document Structure
 ### Book Document
-**json**
 {
   "_id": ObjectId("..."),
   "id": "550e8400-e29b-41d4-a716-446655440000",
@@ -267,8 +276,8 @@ The system can run without most of these as they have been set to default in cod
   "data_hash": "abc123def456..."
 }
 
+
 ### Change Log Document
-**json**
 {
   "_id": ObjectId("..."),
   "id": "660e8400-e29b-41d4-a716-446655440000",
@@ -310,12 +319,15 @@ Log levels: "DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"
 
 ## Testing
 Run the test suite:
+
         pytest
 
 Run with coverage:
+
         pytest --cov=app --cov-report=html
 
 View coverage report:
+
         #Open htmlcov/index.html on the browser
 
 ## Troubleshooting
