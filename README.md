@@ -15,17 +15,23 @@ A sample document structure of the MongoDB records has been given in this docume
   4. Full OpenAPI/Swagger documentation
 **Production Ready**: Clean architecture, type hints, comprehensive logging, and test coverage
 
+<<<<<<< HEAD
 ## Project Structure
  bookstoscrape/
+=======
+ ## Project Structure
+ 
+bookstoscrape/
+>>>>>>> 50dd95dce2ed5cb7f4a80e9711fece96e7f20a77
 ├── app/
 │   ├── __init__.py
-│   ├── config.py              # Configuration management
-│   ├── logging_config.py       # Logging setup
-│   ├── main.py                 # Main entry point
-│   ├── scheduler.py            # APScheduler setup
+│   ├── config.py                # Configuration management
+│   ├── logging_config.py        # Logging setup
+│   ├── main.py                  # Main entry point
+│   ├── scheduler.py             # APScheduler setup
 │   ├── api/
 │   │   ├── __init__.py
-│   │   ├── main.py             # FastAPI application
+│   │   ├── main.py              # FastAPI application
 │   │   ├── auth.py              # Authentication & rate limiting
 │   │   └── routes.py            # API endpoints
 │   ├── crawler/
@@ -41,30 +47,31 @@ A sample document structure of the MongoDB records has been given in this docume
 │   └── models/
 │       ├── __init__.py
 │       ├── book.py              # Book Pydantic models
-│       ├── change_log.py         # Change log models
-│       └── api.py                # API request/response models
+│       ├── change_log.py        # Change log models
+│       └── api.py               # API request/response models
 ├── tests/
 │   ├── __init__.py
-|   ├── test_this.py             # simple crawler test; binary fail or success
-│   ├── conftest.py              # Pytest fixtures
-│   ├── test_crawler.py          # Crawler tests
-│   ├── test_database.py         # Database tests
-│   └── test_change_detector.py  # Change detection tests
+│   ├── test_this.py             # simple crawler test; binary fail or success
+│   ├── conftest.py             # Pytest fixtures
+│   ├── test_crawler.py         # Crawler tests
+│   ├── test_database.py        # Database tests
+│   └── test_change_detector.py # Change detection tests
 ├── screenshots/
-|   ├── snapdb.png                     # A screenshot of the database: books collection
-|   ├── snap_scheduler_working.png     # A screenshot of successful scheduler implementation logs
-|   ├── terminal_logs.png              # A screenshot of successful crawling logs
-├── logs/                         # Log files (created automatically)
-├── requirements.txt              # Python dependencies
-├── .env.example                  # Environment variables template
-├── pytest.ini                    # Pytest configuration
-├── run_crawler.py                # One-time crawl script
-└── README.md                     # This file
+│   ├── snapdb.png              # A screenshot of the database: books collection
+│   ├── snap_scheduler_working.png # A screenshot of successful scheduler implementation logs
+│   ├── terminal_logs.png       # A screenshot of successful crawling logs
+├── logs/                       # Log files (created automatically)
+├── requirements.txt            # Python dependencies
+├── .env.example                # Environment variables template
+├── pytest.ini                  # Pytest configuration
+├── run_crawler.py              # One-time crawl script
+└── README.md                   # This file
+
 
 ## Installation
 ### Prerequisites
 Python 3.10
-MongoDB 4.4+ (running locally or remotely)
+MongoDB 8+ (running locally or remotely)
 pip
 
 ### Steps
@@ -89,6 +96,7 @@ pip
         copy .env.example .env
 
 5. Ensure MongoDB is running:
+   
         mongod
 
 ## Usage
@@ -100,12 +108,14 @@ The API will be available at:
  iii.   ReDoc: "http://localhost:8000/redoc"
 
 To run a manual crawl without using the scheduler:
+
         python run_crawler.py
 
 ### Running Tests
         pytest
 
 With coverage:
+
         pytest --cov=app --cov-report=html
 
 ## API Endpoints
@@ -115,7 +125,7 @@ The following are direct listed ways to access these endpoints. An alternative v
 ### 1. GET /api/v1/books
 Get paginated list of books with filtering and sorting.
 
-*Query Parameters:*
+**Query Parameters:**
 i.      category : Filter by category
 ii.     min_price : Minimum price filter
 iii.    max_price : Maximum price filter
@@ -124,12 +134,15 @@ v.      sort_by : Sort by `rating`, `price`, or `reviews` (default: "rating")
 vi.     page : Page number (default: 1)
 vii.    page_size : Items per page (default: 20, max: 100)
 
-*Example Request:*
+**Example Request:**
         curl -X GET "http://localhost:8000/api/v1/books?category=Fiction&min_price=10&max_price=50&page=1&page_size=20" ^
             -H "X-API-Key: API Key (From the environment variables)"
 
 *Example Response:*
+<<<<<<< HEAD
 ```json
+=======
+>>>>>>> 50dd95dce2ed5cb7f4a80e9711fece96e7f20a77
 {
   "items": [
     {
@@ -156,6 +169,7 @@ vii.    page_size : Items per page (default: 20, max: 100)
 ```
 
 
+
 ### 2. GET /api/v1/books/{book_id}
 Get a specific book by ID.
 
@@ -169,23 +183,28 @@ Get a specific book by ID.
 Get raw HTML snapshot for a book.
 
 *Example Request:*
+
         curl -X GET "http://localhost:8000/api/v1/books/550e8400-e29b-41d4-a716-446655440000/html" ^
           -H "X-API-Key: API Key (From the environment variables)"
 
 ### 4. GET /api/v1/changes
 Get recent change log entries.
 
-*Query Parameters:*
+**Query Parameters:**
 i.      book_id : Filter by book ID
 ii.     change_type : Filter by change type (`new_book`, `price_change`, `availability_change`, etc.)
 iii.    limit : Maximum number of results (default: 100, max: 1000)
 
 *Example Request:*
+
         curl -X GET "http://localhost:8000/api/v1/changes?change_type=price_change&limit=50" ^
           -H "X-API-Key: your-secret-api-key-here"
 
 *Example Response:*
+<<<<<<< HEAD
 ```json
+=======
+>>>>>>> 50dd95dce2ed5cb7f4a80e9711fece96e7f20a77
 [
   {
     "id": "660e8400-e29b-41d4-a716-446655440000",
@@ -208,6 +227,7 @@ iii.    limit : Maximum number of results (default: 100, max: 1000)
 Health check endpoint (no authentication required).
 
 *Example Request:*
+
         curl -X GET "http://localhost:8000/api/v1/health"
 
 ### Alternative
@@ -218,25 +238,29 @@ When asked for the "X-API-Key", Insert the generated API Key found in the enviro
 
 .env.example contains available configuration options:
 
-|       Variable            |          Default             |             Description                |
+## Environment Variables
 
-| "MONGODB_URL"             | "mongodb://localhost:27017"  |   MongoDB connection string            |
-| "MONGODB_DB_NAME"         | "bookstoscrape"              |   Database name                        |
-| "API_KEY"                 | "your-secret-api-key-here"   |   Secret API key for authentication    | 
-| "API_KEY_HEADER"          | "X-API-Key"                  |   Header name for API key              |
-| "RATE_LIMIT_PER_HOUR"     | "100"                        |   Rate limit per API key               |
-| "HOST"                    |"127.0.0.1"                   |   Server host                          | 
-| "PORT"                    | "8000"                       |   Server port                          |
-| "DEBUG"                   | "False"                      |   Debug mode                           |
-| "BASE_URL"                | "https://books.toscrape.com" |   Base URL to crawl                    |
-| "MAX_CONCURRENT_REQUESTS" | 10                           |   Max concurrent HTTP requests         |
-| "RETRY_MAX_ATTEMPTS"      | 3                            |   Max retry attempts                   |
-| "RETRY_BACKOFF_FACTOR"    | 2.0                          |   Exponential backoff factor           |
-| "SCHEDULER_ENABLED"       | True                         |   Enable daily scheduler               |
-| "SCHEDULER_HOUR"          | 9                            |   Scheduler hour (0-23)                |
-| "SCHEDULER_MINUTE"        | 0                            |   Scheduler minute (0-59)              |
-| "LOG_LEVEL"               | INFO                         |   Logging level                        |
-| "LOG_FILE"                | "logs/app.log"               |   Log file path                        |
+Below are the configurable environment variables for this project:
+
+| Variable                         | Default                       | Description                                    |
+|-----------------------------------|-------------------------------|------------------------------------------------|
+| `MONGODB_URL`                     | `mongodb://localhost:27017`    | MongoDB connection string                      |
+| `MONGODB_DB_NAME`                 | `bookstoscrape`               | Database name                                  |
+| `API_KEY`                         | `your-secret-api-key-here`    | Secret API key for authentication             |
+| `API_KEY_HEADER`                  | `X-API-Key`                   | Header name for API key                        |
+| `RATE_LIMIT_PER_HOUR`             | `100`                          | Rate limit per API key                         |
+| `HOST`                            | `127.0.0.1`                   | Server host                                    |
+| `PORT`                            | `8000`                         | Server port                                    |
+| `DEBUG`                           | `False`                        | Debug mode                                     |
+| `BASE_URL`                        | `https://books.toscrape.com`  | Base URL to crawl                              |
+| `MAX_CONCURRENT_REQUESTS`         | `10`                           | Max concurrent HTTP requests                   |
+| `RETRY_MAX_ATTEMPTS`              | `3`                            | Max retry attempts                             |
+| `RETRY_BACKOFF_FACTOR`            | `2.0`                          | Exponential backoff factor                     |
+| `SCHEDULER_ENABLED`               | `True`                         | Enable daily scheduler                         |
+| `SCHEDULER_HOUR`                  | `9`                            | Scheduler hour (0-23)                          |
+| `SCHEDULER_MINUTE`                | `0`                            | Scheduler minute (0-59)                        |
+| `LOG_LEVEL`                       | `INFO`                         | Logging level                                  |
+| `LOG_FILE`                        | `logs/app.log`                | Log file path                                  |
 
 The system can run without most of these as they have been set to default in code, but the compulsory configs variables to be set are the:
         API_KEY: obtained by running 
@@ -244,12 +268,13 @@ The system can run without most of these as they have been set to default in cod
         MONGODB_URL: depending on the MongoDB storage type used (cloud or local)
         MONGO_DB_NAME: Set to the exact name set on MongoDB
 
-The rest can be reset at will
-
 
 ## MongoDB Document Structure
 ### Book Document
+<<<<<<< HEAD
 ```json
+=======
+>>>>>>> 50dd95dce2ed5cb7f4a80e9711fece96e7f20a77
 {
   "_id": ObjectId("..."),
   "id": "550e8400-e29b-41d4-a716-446655440000",
@@ -270,8 +295,12 @@ The rest can be reset at will
 }
 ```
 
+
 ### Change Log Document
+<<<<<<< HEAD
 ```json
+=======
+>>>>>>> 50dd95dce2ed5cb7f4a80e9711fece96e7f20a77
 {
   "_id": ObjectId("..."),
   "id": "660e8400-e29b-41d4-a716-446655440000",
@@ -314,12 +343,15 @@ Log levels: "DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"
 
 ## Testing
 Run the test suite:
+
         pytest
 
 Run with coverage:
+
         pytest --cov=app --cov-report=html
 
 View coverage report:
+
         #Open htmlcov/index.html on the browser
 
 ## Troubleshooting
